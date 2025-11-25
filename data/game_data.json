@@ -1,0 +1,73 @@
+{
+  "terrain_types": [
+    {"id":"plain","name":"Planicie","movement_cost":1,"defense_bonus":0,"evasion_bonus":0,"blocks_movement":false,"blocks_los":false,"color":[34,139,34]},
+    {"id":"forest","name":"Floresta","movement_cost":2,"defense_bonus":2,"evasion_bonus":10,"blocks_movement":false,"blocks_los":true,"color":[34,90,49]},
+    {"id":"mountain","name":"Montanha","movement_cost":3,"defense_bonus":4,"evasion_bonus":-5,"blocks_movement":false,"blocks_los":true,"color":[80,80,80]},
+    {"id":"water","name":"Agua","movement_cost":4,"defense_bonus":0,"evasion_bonus":-10,"blocks_movement":true,"blocks_los":false,"color":[30,30,180]},
+    {"id":"sanctuary","name":"Santuario","movement_cost":1,"defense_bonus":1,"evasion_bonus":0,"blocks_movement":false,"blocks_los":false,"color":[200,200,255]}
+  ],
+  "abilities": [
+    {"id":"slash","name":"Golpe","description":"Ataque basico","ap_cost":2,"energy_cost":0,"range":1,"target":"enemy","effect":"damage","power":12},
+    {"id":"power_strike","name":"Impacto","description":"Golpe pesado","ap_cost":3,"energy_cost":5,"range":1,"target":"enemy","effect":"damage","power":22},
+    {"id":"heal","name":"Cura","description":"Restaura a vida","ap_cost":2,"energy_cost":8,"range":3,"target":"ally","effect":"heal","power":18},
+    {"id":"fireball","name":"Chama","description":"Projétil de fogo","ap_cost":3,"energy_cost":10,"range":4,"target":"enemy","effect":"damage","power":20}
+  ],
+  "items": [
+    {"id":"ancient_artifact","name":"Artefato","description":"Objeto antigo"}
+  ],
+  "entities": [
+    {"id":"hero","name":"Aria","kind":"player","faction":"players","strength":5,"agility":4,"intelligence":3,"defense":4,"hp":110,"energy":50,"attack":12,"range":1,"abilities":["slash","power_strike"]},
+    {"id":"ranger","name":"Bastian","kind":"player","faction":"players","strength":4,"agility":5,"intelligence":3,"defense":3,"hp":95,"energy":60,"attack":10,"range":3,"abilities":["slash","fireball"]},
+    {"id":"goblin","name":"Guerreiro Goblin","kind":"enemy","faction":"enemies","strength":4,"agility":3,"intelligence":2,"defense":2,"hp":70,"energy":30,"attack":9,"range":1,"abilities":["slash"]},
+    {"id":"shaman","name":"Xama","kind":"enemy","faction":"enemies","strength":3,"agility":2,"intelligence":5,"defense":2,"hp":80,"energy":60,"attack":8,"range":3,"abilities":["fireball","heal"]},
+    {"id":"sage","name":"Sabio","kind":"npc","faction":"neutral","dialog":"Obrigado por salvar a clareira!","strength":1,"agility":1,"intelligence":5,"defense":1,"hp":60,"energy":40,"attack":1,"range":1}
+  ],
+  "maps": [
+    {
+      "id":"training_ground",
+      "name":"Clareira Antiga",
+      "mode":"cooperative",
+      "rhythm":"curta",
+      "width":15,
+      "height":15,
+      "turn_limit":12,
+      "player_ids":["hero","ranger"],
+      "enemy_ids":["goblin","shaman"],
+      "npc_ids":["sage"],
+      "player_spawns":[{"x":1,"y":1},{"x":2,"y":1}],
+      "enemy_spawns":[{"x":12,"y":10},{"x":10,"y":12}],
+      "npc_spawns":[{"x":7,"y":7}],
+      "rows": [
+        ["plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","forest","forest","forest","plain","plain","plain","plain","plain","plain","plain","mountain","plain"],
+        ["plain","plain","forest","forest","plain","plain","plain","plain","plain","plain","plain","mountain","mountain","mountain","plain"],
+        ["plain","plain","forest","plain","plain","plain","plain","plain","plain","plain","plain","mountain","plain","plain","plain"],
+        ["plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","plain","plain","forest","forest","forest","plain","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","plain","forest","forest","sanctuary","forest","forest","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","plain","forest","sanctuary","sanctuary","sanctuary","forest","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","plain","forest","forest","sanctuary","forest","forest","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","plain","plain","forest","forest","forest","plain","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","water","water","water","plain","plain","plain","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","water","water","water","plain","plain","plain","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","water","water","water","plain","plain","plain","plain","plain","plain","plain","plain","plain"],
+        ["plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain","plain"]
+      ],
+      "special_tiles": [
+        {"type":"trap","x":5,"y":5,"value":12},
+        {"type":"heal","x":6,"y":7,"value":15},
+        {"type":"portal","x":3,"y":3,"target":"10,10"},
+        {"type":"item","x":8,"y":6,"target":"ancient_artifact"},
+        {"type":"objective","x":7,"y":7,"target":"sage"}
+      ],
+      "objectives": [
+        {"type":"defeat","description":"Eliminar todos os inimigos","amount":2},
+        {"type":"talk","description":"Conversar com o sabio","target":"sage"},
+        {"type":"collect","description":"Recuperar o artefato","target":"ancient_artifact"},
+        {"type":"survive","description":"Sobreviver a 8 turnos","turns":8}
+      ],
+      "lose_conditions":["players_dead","turn_limit"]
+    }
+  ]
+}
